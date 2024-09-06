@@ -22,6 +22,12 @@ func isValidURL(testURL string) bool {
 }
 
 func getURLsFromHTML(htmlBody, rawBaseURL string) ([]string, error) {
+	baseURL, err := url.Parse(rawBaseURL)
+
+	if err != nil {
+		return nil, err
+	}
+
 	doc, err := html.Parse(strings.NewReader(htmlBody))
 
 	if err != nil {
@@ -39,7 +45,7 @@ func getURLsFromHTML(htmlBody, rawBaseURL string) ([]string, error) {
 						continue
 					}
 					if !strings.HasPrefix(val, "http") {
-						val = rawBaseURL + val
+						val = baseURL.String() + val
 					}
 					if isValidURL(val) {
 						res = append(res, val)
