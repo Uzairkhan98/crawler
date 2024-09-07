@@ -16,4 +16,10 @@ func main() {
 	}
 
 	fmt.Println("starting crawl of: ", argsWithProg[1])
+	html, err := getHTML(argsWithProg[1])
+	if err != nil {
+		fmt.Printf("error getting HTML: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Println(html)
 }
