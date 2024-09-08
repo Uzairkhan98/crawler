@@ -15,7 +15,7 @@ type config struct {
 	maxPages           int
 }
 
-func (cfg *config) checkPageCount() bool {
+func (cfg *config) pageLimitReached() bool {
 	cfg.mu.Lock()
 	defer cfg.mu.Unlock()
 	return len(cfg.pages) >= cfg.maxPages

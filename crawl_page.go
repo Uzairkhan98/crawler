@@ -12,7 +12,7 @@ func (cfg *config) crawlPage(rawCurrentURL string) {
 	}()
 
 	cfg.concurrencyControl <- struct{}{}
-	if pageLimitReached := cfg.checkPageCount(); pageLimitReached {
+	if pageLimitReached := cfg.pageLimitReached(); pageLimitReached {
 		return
 	}
 
