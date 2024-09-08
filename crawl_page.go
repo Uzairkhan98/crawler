@@ -10,7 +10,11 @@ func (cfg *config) crawlPage(rawCurrentURL string) {
 		cfg.wg.Done()
 		<-cfg.concurrencyControl
 	}()
+
 	cfg.concurrencyControl <- struct{}{}
+	if pageLimitReached := cfg.checkPageCount(); pageLimitReached {
+		return
+	}
 
 	currentURL, err := url.Parse(rawCurrentURL)
 	if err != nil {
