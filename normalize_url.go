@@ -21,6 +21,9 @@ func normalizeURL(str string) (string, error) {
 	if u.Path != "/" {
 		res = u.Host + u.Path
 	}
+	if res[len(res)-1] == '.' {
+		res = res[:len(res)-1]
+	}
 
 	return res, nil
 }
