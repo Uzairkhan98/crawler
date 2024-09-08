@@ -19,5 +19,7 @@ func main() {
 	pages := make(map[string]int)
 	crawlPage(argsWithProg[1], argsWithProg[1], pages)
 
-	fmt.Println(pages)
+	for normalizedURL, count := range pages {
+		fmt.Printf("%d - %s\n", count, normalizedURL)
+	}
 }

@@ -14,7 +14,7 @@ func crawlPage(rawBaseURL, rawCurrentURL string, pages map[string]int) {
 	if err != nil {
 		fmt.Printf("error parsing current URL: %v", err)
 	}
-	if baseURL.Host != currentURL.Host {
+	if baseURL.Hostname() != currentURL.Hostname() {
 		return
 	}
 	normalizedURL, err := normalizeURL(rawCurrentURL)
@@ -25,12 +25,11 @@ func crawlPage(rawBaseURL, rawCurrentURL string, pages map[string]int) {
 	if ok {
 		pages[normalizedURL] = val + 1
 		return
-	} else {
-		pages[normalizedURL] = 1
 	}
-	html, err := getHTML(currentURL.Scheme + "://" + normalizedURL)
+	pages[normalizedURL] = 1
+	html, err := getHTML(rawCurrentURL)
 	if err != nil {
-		fmt.Printf("error fetching HTML for URL: %v, %v", normalizedURL, err)
+		fmt.Printf("error fetching HTML for URL: %v, %v", rawCurrentURL, err)
 	}
 	fmt.Println(html)
 	newURLs, err := getURLsFromHTML(html, rawCurrentURL)
