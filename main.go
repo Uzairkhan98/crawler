@@ -40,7 +40,5 @@ func main() {
 	cfg.wg.Add(1)
 	cfg.wg.Wait()
 
-	for normalizedURL, count := range cfg.pages {
-		fmt.Printf("%d - %s\n", count, normalizedURL)
-	}
+	printReport(cfg.pages, cfg.baseURL.String())
 }
